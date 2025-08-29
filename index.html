@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ملحمة ومطعم النيل جورمية - أجود اللحوم المصرية في دبي</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/cjqzgFM.png">
+
+  <!-- Cairo Font -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+    body { font-family: 'Cairo', sans-serif; line-height: 1.6; scroll-behavior: smooth; overflow-x: hidden; }
+    
+    .hero { 
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+      url("https://i.imgur.com/q7QAKJ4.png") no-repeat center/cover; 
+      background-size: cover;
+      background-position: center;
+      position: relative; 
+    }
+    
+    .hero::before { 
+      content: ''; 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      bottom: 0; 
+      background: linear-gradient(45deg, rgba(0,0,0,0.4), transparent, rgba(0,0,0,0.3)); 
+      z-index: 1; 
+    }
+    
+    .hero-content { position: relative; z-index: 2; }
+    .floating { animation: floating 3s ease-in-out infinite; }
+    @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    .glow { box-shadow: 0 0 20px rgba(231, 76, 60, 0.5); transition: all 0.3s ease; }
+    .glow:hover { box-shadow: 0 0 30px rgba(231, 76, 60, 0.8); transform: translateY(-2px); }
+    .scroll-down { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; z-index: 3; }
+    @keyframes bounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, -15px); } }
+    #backToTop { display: none; position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #c0392b, #e74c3c); color: white; border: none; border-radius: 50%; padding: 15px; cursor: pointer; z-index: 1000; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3); }
+    #backToTop:hover { transform: scale(1.1) rotate(360deg); box-shadow: 0 6px 20px rgba(192, 57, 43, 0.5); }
+    .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+    .fade-in.show { opacity: 1; transform: translateY(0); }
+    .card-hover { transition: all 0.3s ease; border: 2px solid transparent; }
+    .card-hover:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 2px solid #e74c3c; }
+    .navbar-glass { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .navbar-scrolled { background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px); }
+    .pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+    .whatsapp-btn { position: fixed; bottom: 20px; left: 20px; z-index: 1000; animation: pulse 2s infinite; }
+    .gradient-text { background: linear-gradient(135deg, #f8d568, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    
+    /* New styles for landing page improvements */
+    .special-offer { background: linear-gradient(135deg, #e74c3c, #f39c12); color: white; padding: 12px 0; text-align: center; font-weight: bold; position: relative; overflow: hidden; }
+    .special-offer::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: shine 3s infinite; }
+    @keyframes shine { 0% { left: -100%; } 100% { left: 100%; } }
+    .offer-badge { position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    .form-input { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 16px; transition: all 0.3s; }
+    .form-input:focus { border-color: #e74c3c; box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2); outline: none; }
+    .accordion-item { border-bottom: 1px solid #eee; }
+    .accordion-header { padding: 16px 0; cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .accordion-content.active { max-height: 300px; }
+    .countdown { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+    .countdown-item { background: #e74c3c; color: white; border-radius: 8px; padding: 10px; min-width: 60px; text-align: center; }
+    .countdown-number { font-size: 24px; font-weight: bold; }
+    .countdown-label { font-size: 12px; }
+    /* Loading Spinner CSS */
+    .loader {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #E74C3C;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+    }
+    @keyframes rotation {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    /* Modal CSS */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .modal-content {
+        background-color: white;
+        padding: 40px;
+        border-radius: 16px;
+        text-align: center;
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        max-width: 90%;
+        width: 400px;
+    }
+    .modal-overlay.active .modal-content {
+        transform: scale(1);
+    }
+    
+    .hero h1, .hero p {
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+    }
+    
+    .gradient-text-hero {
+      background: linear-gradient(135deg, #e74c3c, #f39c12); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      background-clip: text; 
+      text-shadow: none;
+    }
+    
+    /* Fixed buttons styling for better display on small screens */
+    .contact-buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: stretch;
+    }
+    .contact-buttons-container .inline-block {
+      width: 100%;
+      text-align: center;
+    }
+    
+    @media (min-width: 640px) {
+      .contact-buttons-container {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+    
+    .catering-image-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .catering-image-container img {
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/2f0e1a5f3f.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Special Offer Bar -->
+  <div class="special-offer">
+    <div class="container mx-auto">
+      🎉 عروض خاصة! خصم 15% على أول طلبية عبر الموقع - استخدم كود: WELCOME15 🎉
+    </div>
+  </div>
+
+  <!-- Loading Screen -->
+  <div id="loading" class="fixed inset-0 bg-white z-50 flex items-center justify-center transition-all duration-300">
+    <div class="text-center">
+      <div class="loader mx-auto mb-4"></div>
+      <p class="text-gray-600 font-semibold">جاري التحميل...</p>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="fixed top-0 w-full navbar-glass text-white shadow-lg z-40 transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+      <a href="#" class="flex items-center gap-3">
+        <img src="https://i.imgur.com/cjqzgFM.png" alt="شعار النيل غورمية" class="w-12 h-12 rounded-full floating">
+        <div>
+          <span class="font-bold text-xl gradient-text">النيل غورمية</span>
+          <p class="text-xs opacity-75">أجود اللحوم المصرية</p>
+        </div>
+      </a>
+      <ul class="hidden md:flex gap-8 font-semibold">
+        <li><a href="#home" class="hover:text-yellow-400 relative group">الرئيسية</a></li>
+        <li><a href="#menu" class="hover:text-yellow-400 relative group">المنيو</a></li>
+        <li><a href="#catering" class="hover:text-yellow-400 relative group">الكاترينج</a></li>
+        <li><a href="#order" class="hover:text-yellow-400 relative group">اطلب الآن</a></li>
+        <li><a href="#location" class="hover:text-yellow-400 relative group">الموقع</a></li>
+        <li><a href="#testimonials" class="hover:text-yellow-400 relative group">آراء العملاء</a></li>
+      </ul>
+      <button id="mobileMenuBtn" class="md:hidden text-2xl hover:text-yellow-400"><i class="fas fa-bars"></i></button>
+    </div>
+    <div id="mobileMenu" class="hidden flex-col bg-black bg-opacity-95 md:hidden text-center py-6 space-y-4">
+      <a href="#home" class="block py-2 hover:text-yellow-400">الرئيسية</a>
+      <a href="#menu" class="block py-2 hover:text-yellow-400">المنيو</a>
+      <a href="#catering" class="block py-2 hover:text-yellow-400">الكاترينج</a>
+      <a href="#order" class="block py-2 hover:text-yellow-400">اطلب الآن</a>
+      <a href="#location" class="block py-2 hover:text-yellow-400">الموقع</a>
+      <a href="#testimonials" class="block py-2 hover:text-yellow-400">آراء العملاء</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header id="home" class="relative h-screen flex items-center justify-center text-center text-white hero">
+    <div class="hero-content p-4 max-w-4xl mx-auto">
+      <img src="https://i.imgur.com/cjqzgFM.png" alt="شعار النيل غورمية" class="w-28 md:w-36 mx-auto mb-6 rounded-full shadow-2xl floating glow" loading="lazy">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+        <span class="block mb-2">جبنالك مصر</span>
+        <span class="gradient-text-hero">لحد عندك ✨</span>
+      </h1>
+      <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 opacity-90 leading-relaxed">
+        استمتع بالطعم الأصيل والنكهات المصرية الفاخرة في أجواء راقية مع أجود اللحوم المختارة بعناية من مصر الحبيبة
+      </p>
+      
+      <!-- Countdown Timer for Special Offer -->
+      <div class="countdown mb-8">
+        <div class="countdown-item">
+          <div class="countdown-number" id="days">00</div>
+          <div class="countdown-label">أيام</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="hours">00</div>
+          <div class="countdown-label">ساعات</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="minutes">00</div>
+          <div class="countdown-label">دقائق</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="seconds">00</div>
+          <div class="countdown-label">ثواني</div>
+        </div>
+      </div>
+      
+      <div class="flex flex-col md:flex-row justify-center gap-6 mb-8">
+        <a href="#order" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-8 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 glow">
+          <i class="fas fa-utensils mr-2"></i>اطلب الآن
+        </a>
+        <a href="#menu" class="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white font-bold py-4 px-8 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105">
+          <i class="fas fa-book-open mr-2"></i>تصفح قائمة المنيو
+        </a>
+      </div>
+      <div class="text-lg opacity-75">
+        <i class="fas fa-phone mr-2"></i>
+        <span dir="ltr">+971 55 409 9255</span>
+      </div>
+    </div>
+    <div class="scroll-down text-white text-3xl">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </header>
+
+  <!-- Why Choose Us Section -->
+  <section class="py-20 bg-gradient-to-b from-red-50 to-white fade-in">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">ليه تختار النيل غورمية؟</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">نحن نقدم لك أفضل تجربة طعام مصري أصيل في دبي</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="p-8 bg-white shadow-xl rounded-2xl text-center card-hover">
+          <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-drumstick-bite text-red-600 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-xl mb-4">لحوم فاخرة</h3>
+          <p class="text-gray-600 leading-relaxed">منتقاة بعناية من أجود اللحوم المصرية الطازجة والمضمونة الجودة</p>
+        </div>
+        <div class="p-8 bg-white shadow-xl rounded-2xl text-center card-hover">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-leaf text-green-600 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-xl mb-4">طازجة يوميًا</h3>
+          <p class="text-gray-600 leading-relaxed">نجهز كل شيء طازج يومياً لضمان أعلى مستويات النظافة والجودة</p>
+        </div>
+        <div class="p-8 bg-white shadow-xl rounded-2xl text-center card-hover">
+          <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-concierge-bell text-yellow-600 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-xl mb-4">كاترينج فاخر</h3>
+          <p class="text-gray-600 leading-relaxed">خدمة احترافية متميزة للمناسبات والحفلات الخاصة بأعلى المعايير</p>
+        </div>
+        <div class="p-8 bg-white shadow-xl rounded-2xl text-center card-hover">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-tags text-blue-600 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-xl mb-4">أسعار تنافسية</h3>
+          <p class="text-gray-600 leading-relaxed">أفضل جودة بأفضل سعر في دبي مع عروض وخصومات مستمرة</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Order Form Section -->
+  <section id="order" class="py-20 bg-white fade-in">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">اطلب الآن</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">املأ النموذج وسنتصل بك لتأكيد طلبك خلال دقائق</p>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div class="bg-gradient-to-br from-red-50 to-yellow-50 p-8 rounded-3xl shadow-xl">
+          <h3 class="text-2xl font-bold mb-6 text-center">نموذج الطلب</h3>
+          <form id="orderForm" class="space-y-4">
+            <div>
+              <input type="text" class="form-input" placeholder="الاسم بالكامل" required>
+            </div>
+            <div>
+              <input type="tel" class="form-input" placeholder="رقم الهاتف" required>
+            </div>
+            <div>
+              <input type="email" class="form-input" placeholder="البريد الإلكتروني (اختياري)">
+            </div>
+            <div>
+              <textarea class="form-input" rows="3" placeholder="العنوان بالتفصيل" required></textarea>
+            </div>
+            <div>
+              <select class="form-input" required>
+                <option value="" selected disabled>نوع الطلب</option>
+                <option value="delivery">توصيل</option>
+                <option value="pickup">استلام من المطعم</option>
+                <option value="catering">خدمة كاترينج</option>
+              </select>
+            </div>
+            <div>
+              <textarea class="form-input" rows="4" placeholder="تفاصيل الطلب (اذكر ما تريد طلبه)"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-8 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105">
+              تأكيد الطلب
+            </button>
+          </form>
+        </div>
+        
+        <div class="flex flex-col justify-center">
+          <div class="bg-white p-8 rounded-3xl shadow-xl mb-8 relative">
+            <div class="offer-badge">15%</div>
+            <h3 class="text-2xl font-bold mb-4">عرض خاص للمرة الأولى!</h3>
+            <p class="text-gray-700 mb-4">استخدم كود الخصم <span class="font-bold text-red-600">WELCOME15</span> واحصل على خصم 15% على طلبك الأول</p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> توصيل مجاني للطلبات فوق 200 درهم</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> ضمان جودة المنتج 100%</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> خدمة عملاء متاحة 24/7</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gray-100 p-6 rounded-2xl text-center">
+            <h4 class="font-bold text-lg mb-2">تواصل معنا مباشرة</h4>
+            <p class="text-gray-600 mb-4">إذا كنت تفضل التواصل المباشر</p>
+            <div class="flex flex-col sm:flex-row justify-center items-stretch gap-4">
+              <a href="https://wa.me/971554099255" target="_blank" class="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 transform hover:scale-105">
+                <i class="fab fa-whatsapp mr-2"></i>واتساب
+              </a>
+              <a href="tel:+971554099255" class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 transform hover:scale-105 mt-2 sm:mt-0">
+                <i class="fas fa-phone mr-2"></i>اتصال
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="py-20 bg-gray-50 fade-in">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">قائمة المنيو</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">اكتشف مجموعتنا المتنوعة من أشهى الأطباق المصرية الأصيلة</p>
+      </div>
+      
+      <!-- Gemini API Feature -->
+      <div class="bg-white p-8 rounded-3xl shadow-xl mb-12">
+        <h3 class="text-2xl font-bold mb-4 text-center">ماذا لديك في مطبخك؟ ✨</h3>
+        <p class="text-gray-600 text-center mb-6">أدخل المكونات المتوفرة لديك وسنقترح عليك وجبة من قائمتنا</p>
+        <div class="flex flex-col sm:flex-row gap-4 mb-4">
+          <input type="text" id="ingredients-input" class="form-input flex-1" placeholder="مثال: دجاج، أرز، بصل">
+          <button id="suggest-meal-btn" class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 transform hover:scale-105">
+            اقتراح وجبة ✨
+          </button>
+        </div>
+        <div id="gemini-suggestion-loading" class="hidden text-center text-gray-600">
+            <div class="loader mx-auto mb-2"></div>
+            <p>جارٍ البحث عن اقتراحات...</p>
+        </div>
+        <div id="gemini-suggestion-result" class="p-4 rounded-xl text-center">
+            <!-- Gemini's suggestion will be displayed here -->
+        </div>
+      </div>
+
+      <div id="menu-content">
+        <!-- Menu items will be generated here by JavaScript -->
+      </div>
+      
+      <div class="text-center mt-10">
+        <a href="#order" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-8 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 mr-4">
+          <i class="fas fa-shopping-cart mr-2"></i>اطلب الآن
+        </a>
+        <a href="https://wa.me/971554099255" target="_blank" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-8 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105">
+          <i class="fab fa-whatsapp mr-2"></i>استفسر عبر واتساب
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catering Section -->
+  <section id="catering" class="py-20 bg-white fade-in">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <h2 class="text-4xl md:text-5xl font-bold mb-8 gradient-text">خدمة الكاترينج الفاخرة</h2>
+          <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+            في النيل غورميه، لا نقدم فقط أجود اللحوم والأطعمة الجاهزة، بل نشارككم أيضاً في أجمل لحظاتكم! سواء كنت تستعد لعزومة فاخرة، أو حفل خطوبة مميز، أو أي مناسبة خاصة، نحن هنا لنحولها إلى تجربة مصرية أصيلة لا تُنسى. هدفنا هو أن تعيش أجواء مصر وتتذوق نكهاتها الفريدة في قلب الإمارات، بأسعار تنافسية لا مثيل لها. ولتجربة استثنائية، يمكنك طلب خدمة **الشواء الحي (Live BBQ)**. ما عليك سوى اختيار لحومك المتبلة، وسنرسل لك شيفًا محترفًا مع شواية مخصصة، ليقدم لك ولضيوفك أشهى المشويات الطازجة أمام أعينكم. ومع لمسة خاصة من إضافاتك، نعدك بأننا سنعيد لضيوفك ذكريات جميلة!.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center items-stretch gap-4 mt-10">
+            <a href="https://wa.me/971554099255?text=أريد%20الاستفسار%20عن%20خدمة%20الكاترينج" target="_blank" class="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-8 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 glow">
+              <i class="fab fa-whatsapp mr-2"></i>احجز خدمة الكاترينج
+            </a>
+            <a href="#order" class="flex-1 bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white font-bold py-4 px-8 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 mt-2 sm:mt-0">
+              <i class="fas fa-calendar-check mr-2"></i>احجز عبر الموقع
+            </a>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="video-container">
+            <video autoplay muted loop playsinline>
+              <source src="https://i.imgur.com/S37M5Hp.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-20 bg-white fade-in">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">أسئلة شائعة</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">إجابات على الأسئلة الأكثر شيوعاً من عملائنا</p>
+      </div>
+      
+      <div class="space-y-6">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>ما هي مدة التوصيل المتوقعة؟</span>
+            <i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="accordion-content">
+            <p class="py-4 text-gray-700">مدة التوصيل تتراوح بين ساعة ونصف إلى ساعتين حسب موقعك وازدحام الطريق. نحرص دائماً على توصيل طلباتكم في أسرع وقت ممكن مع الحفاظ على الجودة.</p>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>هل تقدمون خيارات للوجبات النباتية؟</span>
+            <i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="accordion-content">
+            <p class="py-4 text-gray-700">نعم، لدينا مجموعة من الأطباق النباتية الشهية في قائمتنا. يمكنك الاطلاع عليها في قسم المنيو أو الاستفسار عبر الواتساب.</p>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>ما هي طرق الدفع المتاحة؟</span>
+            <i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="accordion-content">
+            <p class="py-4 text-gray-700">نقبل الدفع نقداً عند الاستلام، والدفع بالبطاقة، والتحويل البنكي. كما يمكنك الدفع عبر تطبيقات الدفع الإلكتروني.</p>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>هل تقدمون خدمة التوصيل خارج دبي؟</span>
+            <i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="accordion-content">
+            <p class="py-4 text-gray-700">حالياً نقدم خدمة التوصيل داخل دبي فقط. للاستفسارات حول التوصيل خارج دبي، يرجى التواصل معنا عبر الواتساب.</p>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>كيف يمكنني التتبع حالة طلبي؟</span>
+            <i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="accordion-content">
+            <p class="py-4 text-gray-700">بعد تأكيد الطلب، سنرسل لك رسالة تتضمن رقم الطلب ومعلومات الاتصال بالسائق. يمكنك أيضاً التواصل معنا مباشرة على الرقم +971554099255 لمتابعة طلبك.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location Section -->
+  <section id="location" class="py-20 bg-gray-50 fade-in">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">موقعنا في دبي</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">زورونا في موقعنا المميز واستمتعوا بتجربة طعام لا تُنسى</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div>
+          <div class="bg-white p-8 rounded-3xl shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-center">معلومات التواصل</h3>
+            <div class="space-y-6">
+              <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl shadow-md"><div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center"><i class="fas fa-phone text-red-600"></i></div>
+                <div><h4 class="font-bold">رقم الهاتف</h4><p class="text-gray-600" dir="ltr">+971 55 409 9255</p></div></div>
+              <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl shadow-md"><div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"><i class="fab fa-whatsapp text-green-600"></i></div>
+                <div><h4 class="font-bold">واتساب</h4><p class="text-gray-600" dir="ltr">+971 55 409 9255</p></div></div>
+              <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl shadow-md"><div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center"><i class="fas fa-map-marker-alt text-blue-600"></i></div>
+                <div><h4 class="font-bold">الموقع</h4><p class="text-gray-600">دبي، الإمارات العربية المتحدة<br>روز بالاس, محل رقم 15 - البرشا جنوب [Al Barsha South]</p></div></div>
+              <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl shadow-md"><div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center"><i class="fas fa-clock text-yellow-600"></i></div>
+                <div><h4 class="font-bold">ساعات العمل</h4><p class="text-gray-600">يومياً: 9 ص - 11:30 م</p></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-200 rounded-3xl h-96 flex items-center justify-center shadow-xl relative overflow-hidden">
+          <!-- Google Map Embed -->
+          <iframe src="https://www.google.com/maps?q=Rose+Palace,+15+Al+Barsha+South,+Dubai&hl=ar&z=15&output=embed" width="100%" height="100%" frameborder="0" style="border:0; border-radius:24px;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 bg-gradient-to-b from-yellow-50 to-white fade-in">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <h2 class="text-4xl md:text-5xl font-bold gradient-text mb-4">آراء العملاء</h2>
+        <p class="text-xl text-gray-700 max-w-2xl mx-auto">إليك بعض من تقييمات عملائنا الكرام</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="p-8 bg-white rounded-2xl shadow-xl card-hover fade-in show">
+          <div class="mb-4 flex justify-center"><i class="fas fa-star text-yellow-500 text-2xl mr-2"></i><span class="font-bold text-lg">4.8</span></div>
+          <p class="text-gray-700 mb-3">"اللحوم فعلاً طازجة والنكهات حكاية! تجربة مصرية أصيلة في قلب دبي."</p>
+          <h4 class="font-bold">فاطمة أ.</h4>
+        </div>
+        <div class="p-8 bg-white rounded-2xl shadow-xl card-hover fade-in show">
+          <div class="mb-4 flex justify-center"><i class="fas fa-star text-yellow-500 text-2xl mr-2"></i><span class="font-bold text-lg">5.0</span></div>
+          <p class="text-gray-700 mb-3">"الخدمة ممتازة جداً والمنيو متنوع جداً. المطعم يستحق التجربة في أي مناسبة!"</p>
+          <h4 class="font-bold">محمد ز.</h4>
+        </div>
+        <div class="p-8 bg-white rounded-2xl shadow-xl card-hover fade-in show">
+          <div class="mb-4 flex justify-center"><i class="fas fa-star text-yellow-500 text-2xl mr-2"></i><span class="font-bold text-lg">4.9</span></div>
+          <p class="text-gray-700 mb-3">"طلبات الكاترينج وصلت في الوقت وكل الضيوف كانوا سعداء بالطعم والجودة."</p>
+          <h4 class="font-bold">جنى ر.</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/971554099255" target="_blank" class="whatsapp-btn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب" class="w-14 h-14">
+  </a>
+  <!-- Back To Top Button -->
+  <button id="backToTop" title="العودة للأعلى">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmationModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="text-green-500 mb-4">
+        <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-8.6"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      </div>
+      <h3 class="text-2xl font-bold mb-2">تم استلام طلبك!</h3>
+      <p class="text-gray-600 mb-6">شكراً لك، سنتصل بك خلال دقائق قليلة لتأكيد طلبك وتفاصيله.</p>
+      <button id="closeModal" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full transition-all duration-300">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- JS for effects and dynamic menu generation -->
+  <script>
+    // Navbar glass effect on scroll
+    window.onscroll = function () {
+      var nav = document.getElementById('navbar');
+      if (window.scrollY > 80) nav.classList.add('navbar-scrolled');
+      else nav.classList.remove('navbar-scrolled');
+      // Show Back To Top button
+      var btn = document.getElementById('backToTop');
+      btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+    };
+    // Mobile Menu
+    document.getElementById('mobileMenuBtn').onclick = function () {
+      var menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    };
+    // Back To Top
+    document.getElementById('backToTop').onclick = function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    // Fade-in effect
+    function fadeInOnScroll() {
+      document.querySelectorAll('.fade-in').forEach(function(el){
+        var rect = el.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 40) el.classList.add('show');
+      });
+    }
+    window.addEventListener('scroll', fadeInOnScroll);
+    window.addEventListener('DOMContentLoaded', fadeInOnScroll);
+
+    // Hide loader after load
+    window.onload = function() {
+      document.getElementById('loading').style.display = 'none';
+    };
+
+    // FAQ Accordion
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const icon = header.querySelector('i');
+        
+        content.classList.toggle('active');
+        icon.classList.toggle('fa-chevron-down');
+        icon.classList.toggle('fa-chevron-up');
+      });
+    });
+
+    // Order Form Submission with custom modal
+    const orderForm = document.getElementById('orderForm');
+    const modal = document.getElementById('confirmationModal');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    orderForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Show the custom modal instead of alert()
+      modal.classList.add('active');
+      this.reset();
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+
+    // Countdown Timer
+    function updateCountdown() {
+      const now = new Date();
+      const target = new Date();
+      target.setHours(23, 59, 59, 999);
+      
+      const diff = target - now;
+      
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      document.getElementById('days').innerText = days.toString().padStart(2, '0');
+      document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+    }
+    
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+    
+    // Dynamic Menu Generation
+    const menuData = [
+      { category: 'Beef (لحوم)', nameAR: 'مكعبات لحم', nameEN: 'Beef Cubes', descriptionAR: 'قطع لحم بقري طازجة مثالية للطواجن والخضار والأطباق المطبوخة.', descriptionEN: 'Fresh cuts of beef, perfect for casseroles, vegetables and cooked dishes.', price: 60, ingredients: 'لحم بقري، توابل.' },
+      { category: 'Beef (لحوم)', nameAR: 'بيكاتا', nameEN: 'Piccata', descriptionAR: 'شرائح لحم رقيقة، سريعة الطهي ومناسبة للوجبات الخفيفة والمكرونة.', descriptionEN: 'Thinly sliced steaks, quick to cook and suitable for snacks and pasta.', price: 60, ingredients: 'لحم بقري، بهارات.' },
+      { category: 'Beef (لحوم)', nameAR: 'بوفتيك', nameEN: 'Buftek', descriptionAR: 'شرائح لحم رقيقة مثالية للقلي بالبقسماط او الشوي.', descriptionEN: 'Thinly sliced steak, perfect for breading or grilling.', price: 60, ingredients: 'لحم بقري، بقسماط، بيض.' },
+      { category: 'Beef (لحوم)', nameAR: 'فيليه ستيك', nameEN: 'Steak Fillet', descriptionAR: 'قطعة طرية وقليلة الدهون ممتازة للشوي أو القلي.', descriptionEN: 'A tender, low-fat cut, perfect for grilling or frying.', price: 115, ingredients: 'لحم بقري فيليه.' },
+      { category: 'Beef (لحوم)', nameAR: 'لحم مفروم', nameEN: 'Minced Meat', descriptionAR: 'لحم بقري مفروم عالي الجودة، يستخدم في الكفتة والحواوشي وغيرها.', descriptionEN: 'High-quality minced beef, used in kofta, hawawshi, etc.', price: 58, ingredients: 'لحم مفروم.' },
+      { category: 'Beef (لحوم)', nameAR: 'روستو', nameEN: 'Roast Beef', descriptionAR: 'قطعة لحم كبيرة مناسبة للتحمير والتقطيع لشرائح باردة أو ساخنة.', descriptionEN: 'A large piece of meat suitable for roasting and slicing cold or hot.', price: 60, ingredients: 'لحم بقري، توابل.' },
+      { category: 'Beef (لحوم)', nameAR: 'شاورما اللحم', nameEN: 'Meat Shawarma', descriptionAR: 'شرائح لحم رفيعة مثالية لتحضير ساندويتشات الشاورما.', descriptionEN: 'Thin slices of meat, ideal for shawarma sandwiches.', price: 60, ingredients: 'لحم شاورما، بهارات.' },
+      { category: 'Beef (لحوم)', nameAR: 'بيف استروجانوف', nameEN: 'Beef Stroganoff', descriptionAR: 'شرائح لحم رفيعة مناسبة للطهي.', descriptionEN: 'Thin steaks, suitable for cooking.', price: 60, ingredients: 'لحم بقري، كريمة، مشروم.' },
+      { category: 'Beef (لحوم)', nameAR: 'انتركوت', nameEN: 'Entrecôte', descriptionAR: 'قطعة ستيك بنسبة دهون مناسبة، تعطي نكهة غنية عند الشوي.', descriptionEN: 'A steak with the right fat content, which gives a rich flavour when grilled.', price: 75, ingredients: 'لحم بقري.' },
+      { category: 'Beef (لحوم)', nameAR: 'ريب آي', nameEN: 'Ribeye', descriptionAR: 'ستيك غنية بالدهون الداخلية (الماربلينج)، شديدة الطراوة والنكهة.', descriptionEN: 'A steak with plenty of internal fat (marbling), very tender and flavourful.', price: 75, ingredients: 'لحم بقري.' },
+      { category: 'Beef (لحوم)', nameAR: 'رقبة بتلو', nameEN: 'Beef Neck', descriptionAR: 'قطعة غنية بالنكهة، تحتاج طهي بطيء لتصبح طرية جدا.', descriptionEN: 'Full of flavour, needs slow cooking to become very tender.', price: 58, ingredients: 'رقبة بتلو.' },
+      { category: 'Beef (لحوم)', nameAR: 'ريش بتلو', nameEN: 'Beef Chops', descriptionAR: 'قطع من الضلوع بالعظم ممتازة للشوي أو للطواجن.', descriptionEN: 'Bone-in ribeye chunks, great for grilling or casseroles.', price: 80, ingredients: 'ريش بتلو.' },
+      { category: 'Beef (لحوم)', nameAR: 'كبدة شرائح بقري سادة', nameEN: 'Plain Sliced Liver', descriptionAR: 'كبدة بقري طازجة مقطعة شرائح سريعة التحضير.', descriptionEN: 'Fresh sliced beef liver, quick to prepare.', price: 58, ingredients: 'كبدة بقري.' },
+      { category: 'Beef (لحوم)', nameAR: 'كبدة اسكندراني سادة', nameEN: 'Plain Alexandrian Liver', descriptionAR: 'كبدة مقطعة مكعبات صغيرة لتحضير الكبدة الإسكندراني.', descriptionEN: 'Small diced liver, for Alexandrian liver.', price: 58, ingredients: 'كبدة بقري، فلفل حار، ثوم.' },
+      { category: 'Beef (لحوم)', nameAR: 'موزة بقري (بالعظام)', nameEN: 'Beef Shank With Bones', descriptionAR: 'قطعة غنية بالنخاع، مثالية للحساء والطواجن الغنية.', descriptionEN: 'A marrow-rich cut, ideal for rich soups and casseroles.', price: 58, ingredients: 'موزة بقري، عظم.' },
+      { category: 'Beef (لحوم)', nameAR: 'كوارع', nameEN: 'Trotters', descriptionAR: 'أقدام بقري تحتاج طهي طويل، تستخدم في الحساء والأطباق التقليدية.', descriptionEN: 'Long-cooked beef feet, used in soups and traditional dishes.', price: 32, ingredients: 'كوارع بقري، بهارات.' },
+      { category: 'Beef (لحوم)', nameAR: 'عكاوي', nameEN: 'Oxtail', descriptionAR: 'ذيل بقري غني بالجيلاتين والنكهة، مثالي للطهي البطيء.', descriptionEN: 'A gelatinous and flavourful beef tail, ideal for slow cooking.', price: 42, ingredients: 'عكاوي بقري.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'خروف نعيمي بدون عظم', nameEN: 'Naimi Lamb without Bones', descriptionAR: 'لحم خروف نعيمي فاخر منزوع العظم مثالي للشواء أو الطهي السريع.', descriptionEN: 'Premium Naimi lamb meat, boneless, ideal for grilling or quick cooking.', price: 79, ingredients: 'لحم ضاني نعيمي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'ريش ضاني نعيمي', nameEN: 'Naimi Lamb Chops', descriptionAR: 'ريش ضاني نعيمي طرية وعالية الجودة، مثالية للشواء أو القلي.', descriptionEN: 'Tender and high-quality Naimi lamb chops, perfect for grilling or frying.', price: 115, ingredients: 'ريش ضاني نعيمي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'كتف ضاني نعيمي', nameEN: 'Naimi Lamb Shoulder', descriptionAR: 'كتف ضاني نعيمي غني بالنكهة، مناسب للطهي البطيء أو الشواء.', descriptionEN: 'Flavorful Naimi lamb shoulder, suitable for slow cooking or roasting.', price: 68, ingredients: 'كتف ضاني نعيمي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'موزه ضاني نعيمي', nameEN: 'Naimi Lamb Shank', descriptionAR: 'موزه ضاني نعيمي طرية، مثالية للطهي البطيء والأطباق التقليدية.', descriptionEN: 'Tender Naimi lamb shank, ideal for slow cooking and traditional dishes.', price: 69, ingredients: 'موزة ضاني نعيمي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'رقبة ضاني نعيمي', nameEN: 'Naimi Lamb Neck', descriptionAR: 'رقبة ضاني نعيمي غنية بالنكهة مثالية للحساء واليخنات.', descriptionEN: 'Rich and flavorful Naimi lamb neck, perfect for soups and stews.', price: 68, ingredients: 'رقبة ضاني نعيمي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'فخذة ضاني نعيمي', nameEN: 'Naimi Lamb Leg', descriptionAR: 'فخذة ضاني نعيمي كاملة، مثالية للشواء أو الطهي في الفرن.', descriptionEN: 'Whole Naimi lamb leg, ideal for roasting or oven cooking.', price: 68, ingredients: 'فخذة ضاني نعيمي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'غنم محلي', nameEN: 'Local Goat', descriptionAR: 'لحم غنم محلي طازج، متعدد الاستخدامات للطهي بمختلف الطرق.', descriptionEN: 'Fresh local goat meat, versatile for various cooking methods.', price: 60, ingredients: 'لحم غنم محلي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'لحم ضاني استرالي بدون عظم', nameEN: 'Australian Lamb no Bones', descriptionAR: 'لحم ضاني أسترالي عالي الجودة، منزوع العظم، مثالي للشواء أو الطهي السريع.', descriptionEN: 'High-quality Australian lamb meat, boneless, perfect for grilling or quick cooking.', price: 70, ingredients: 'لحم ضاني استرالي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'ريش ضاني أسترالي', nameEN: 'Australian Lamb Chops', descriptionAR: 'ريش ضاني أسترالي طرية وغنية بالنكهة مثالية للشواء أو القلي.', descriptionEN: 'Tender and flavorful Australian lamb chops, ideal for grilling or frying.', price: 115, ingredients: 'ريش ضاني استرالي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'كتف ضاني أسترالي', nameEN: 'Australian Lamb Shoulder', descriptionAR: 'كتف ضاني أسترالي غني بالنكهة مثالي للطهي البطيء أو الشواء.', descriptionEN: 'Rich and flavorful Australian lamb shoulder, suitable for slow cooking or roasting.', price: 58, ingredients: 'كتف ضاني استرالي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'موزة ضاني أسترالي', nameEN: 'Australian Lamb Shank', descriptionAR: 'موزة ضاني أسترالي طرية، مثالية للطهي البطيء والأطباق التقليدية.', descriptionEN: 'Tender Australian lamb shank, perfect for slow cooking and traditional dishes.', price: 60, ingredients: 'موزة ضاني استرالي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'رقبة ضاني أسترالي', nameEN: 'Australian Lamb Neck', descriptionAR: 'رقبة ضاني أسترالي غنية بالنكهة مثالية للحساء واليخنات.', descriptionEN: 'Flavorful Australian lamb neck, ideal for soups and stews.', price: 58, ingredients: 'رقبة ضاني استرالي.' },
+      { category: 'Lamb (لحوم ضاني)', nameAR: 'فخذة ضاني أسترالي', nameEN: 'Australian Lamb Leg', descriptionAR: 'لحم ضاني أسترالي عالي الجودة، مثالي للشواء أو الطهي السريع.', descriptionEN: 'High-quality Australian lamb meat, perfect for grilling or quick cooking.', price: 58, ingredients: 'فخذة ضاني استرالي.' },
+      { category: 'Poultry (دواجن)', nameAR: 'صدور دجاج مخليه', nameEN: 'Chicken Breast', descriptionAR: 'صدور دجاج طازجة ومخلية، خالية من الدهون، مثالية للحميات الصحية.', descriptionEN: 'Fresh and marinated chicken breasts, low in fat, ideal for healthy diets.', price: 45, ingredients: 'صدور دجاج.' },
+      { category: 'Poultry (دواجن)', nameAR: 'صدور دجاج ستيك', nameEN: 'Chicken Steak', descriptionAR: 'صدور دجاج متبلة بتتبيلة خاصة مثالية للشوي والتحضير على الجريل.', descriptionEN: 'Pointed chicken breasts processed with a special marinade, perfect for grilling.', price: 45, ingredients: 'صدور دجاج، توابل.' },
+      { category: 'Poultry (دواجن)', nameAR: 'دجاج مكعبات', nameEN: 'Chicken Cubes', descriptionAR: 'مكعبات دجاج منتظمة الحجم مثالية للطبخ السريع والمقبلات والسلطات.', descriptionEN: 'Uniformly sized chicken cubes, ideal for quick cooking, appetizers, and salads.', price: 45, ingredients: 'دجاج، توابل.' },
+      { category: 'Poultry (دواجن)', nameAR: 'أفخاذ بالعظم', nameEN: 'Chicken Thighs', descriptionAR: 'أفخاذ دجاج طازجة مع العظم غنية بالنكهة والعصارة مثالية للشوي.', descriptionEN: 'Fresh chicken thighs with bone, rich in flavor and juiciness, ideal for grilling.', price: 38, ingredients: 'أفخاذ دجاج.' },
+      { category: 'Poultry (دواجن)', nameAR: 'دجاج كاملة', nameEN: 'Full Chicken', descriptionAR: 'دجاج كامل طازج معالج بعناية، مناسب للطهي الكامل.', descriptionEN: 'Fresh whole chicken processed with care, suitable for complete cooking.', price: 25, ingredients: 'دجاج كامل.' },
+      { category: 'Poultry (دواجن)', nameAR: 'جوز حمام مصري', nameEN: 'Egyptian Pigeons', descriptionAR: 'جوز حمام مصري طازج ومغذي، يتميز بلحمه الناعم والغني بالبروتين.', descriptionEN: 'Fresh and nutritious Egyptian pigeons, characterized by tender and protein-rich meat.', price: 50, ingredients: 'حمام مصري.' },
+      { category: 'Poultry (دواجن)', nameAR: 'دجاج بلدي مصري', nameEN: 'Egyptian Chicken', descriptionAR: 'دجاج بلدي مصري أصيل، مربى بالطرق التقليدية، يتميز بنكهته القوية.', descriptionEN: 'Authentic Egyptian local chicken, characterized by strong flavor and firm texture.', price: 45, ingredients: 'دجاج بلدي.' },
+      { category: 'Poultry (دواجن)', nameAR: 'بط بلدي مصري', nameEN: 'Egyptian Duck', descriptionAR: 'بط مصري بلدي طازج يتميز بلحمه الدهني والغني بالنكهة.', descriptionEN: 'Fresh Egyptian local duck, characterized by fatty and flavorful meat.', price: 45, ingredients: 'بط بلدي.' },
+      { category: 'Poultry (دواجن)', nameAR: 'أرنب بلدي مصري', nameEN: 'Egyptian Rabbit', descriptionAR: 'أرنب مصري بلدي طازج، لحمه ناعم وخفيف، غني بالبروتين ومنخفض الدهون.', descriptionEN: 'Fresh Egyptian local rabbit, with tender and light meat, rich in protein and low in fat.', price: 46, ingredients: 'أرنب بلدي.' },
+      { category: 'Poultry (دواجن)', nameAR: 'ديك رومي مصري', nameEN: 'Egyptian Turkey', descriptionAR: 'ديك رومي مصري أصيل، يتميز بلحمه الصلب والغني بالبروتين.', descriptionEN: 'Authentic Egyptian turkey, characterized by firm and protein-rich meat.', price: 47, ingredients: 'ديك رومي.' },
+      { category: 'Poultry (دواجن)', nameAR: 'ديك رومي أمريكي', nameEN: 'American Turkey', descriptionAR: 'ديك رومي أمريكي معروف بحجمه الكبير وجودته العالية.', descriptionEN: 'American turkey known for its large size and high quality.', price: 39, ingredients: 'ديك رومي.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'طرب متبل', nameEN: 'Tarb marinated', descriptionAR: 'قطع لحم طرية ومتبلة بتوابل تقليدية مثالية للشوي والمقبلات.', descriptionEN: 'Tender meat cuts marinated with traditional spices, perfect for grilling.', price: 60, ingredients: 'طرب لحم، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'كبدة شرايح متبلة', nameEN: 'Silice liver marinated', descriptionAR: 'شرائح كبدة طازجة متبلة بنكهات غنية، مقرمشة ولذيذة.', descriptionEN: 'Fresh liver slices marinated with rich flavors, crispy and delicious.', price: 60, ingredients: 'كبدة، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'سجق متبل', nameEN: 'Sausages marinated', descriptionAR: 'سجق محلي متبل بخلطة توابل خاصة مثالي للإفطار والوجبات السريعة.', descriptionEN: 'Local sausages marinated with special spice blend, ideal for breakfast.', price: 58, ingredients: 'سجق، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'ستيك فيليه متبل', nameEN: 'Steak fillet marinated', descriptionAR: 'قطعة فيليه فاخرة متبلة بدقة، طرية وعالية الجودة.', descriptionEN: 'Luxury fillet steak marinated with precision, tender and high-quality.', price: 110, ingredients: 'فيليه، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'ريب آي متبل', nameEN: 'Ribeye marinated', descriptionAR: 'ريب آي لحم بقري فاخر متبل، غني بالنكهة والعصارة.', descriptionEN: 'Luxury beef ribeye marinated, rich in flavor and juiciness.', price: 78, ingredients: 'ريب آي، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'كباب متبل', nameEN: 'Kabab marinated', descriptionAR: 'كباب تقليدي متبل بتوابل شرقية أصيلة.', descriptionEN: 'Traditional kabab marinated with authentic eastern spices.', price: 80, ingredients: 'كباب، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'كفتة متبلة', nameEN: 'Kofta marinated', descriptionAR: 'كفتة محضرة بالطريقة التقليدية، متبلة بخلطة خاصة.', descriptionEN: 'Kofta prepared in traditional method, marinated with special blend.', price: 58, ingredients: 'كفتة، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'ريش متبلة', nameEN: 'Lamb chops marinated', descriptionAR: 'ريش لحم ضأن طازج متبل، مثالي للشوي.', descriptionEN: 'Fresh lamb chops marinated, perfect for grilling.', price: 110, ingredients: 'ريش ضاني، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'برجر واجيو', nameEN: 'Wagyu burger marinated', descriptionAR: 'برجر لحم واجيو فاخر متبل، ذو جودة عالية.', descriptionEN: 'Luxury Wagyu burger marinated, high-quality meat.', price: 80, ingredients: 'برجر واجيو.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'برجر فراخ', nameEN: 'Chicken burger', descriptionAR: 'برجر دجاج طازج وسريع التحضير.', descriptionEN: 'Fresh and quick-to-prepare chicken burger.', price: 45, ingredients: 'برجر دجاج.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'رغيف حواوشي بلدي', nameEN: 'Hawawshi meat marinated', descriptionAR: 'حواوشي تقليدي محلي بنكهات أصيلة.', descriptionEN: 'Traditional local Hawawshi with authentic flavors.', price: 12, ingredients: 'خبز بلدي، لحم مفروم.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'شيش طاووق متبل', nameEN: 'Shish taouq marinated', descriptionAR: 'شيش طاووق متبل بتتبيلة النيل الشهيرة.', descriptionEN: 'Shish taouq marinated with famous Al-Nile marinade.', price: 48, ingredients: 'دجاج، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'شيش طاووق أفخاذ', nameEN: 'Shish tawook thighs marinated', descriptionAR: 'أفخاذ طاووق متبلة بنكهات مميزة.', descriptionEN: 'Chicken thighs marinated with distinctive flavors.', price: 50, ingredients: 'أفخاذ دجاج، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'أفخاذ دجاج مع العظم', nameEN: 'Bone-in chicken thigh marinated', descriptionAR: 'أفخاذ دجاج طازجة مع العظم متبلة بإتقان.', descriptionEN: 'Fresh bone-in chicken thighs, expertly marinated.', price: 42, ingredients: 'أفخاذ دجاج.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'ستيك دجاج متبل', nameEN: 'Chicken steak marinated', descriptionAR: 'ستيك دجاج مميز متبل بتوابل خاصة.', descriptionEN: 'Distinctive chicken steak marinated with special spices.', price: 45, ingredients: 'دجاج، توابل.' },
+      { category: 'Ready To Grill (جاهز للشواء)', nameAR: 'دجاج متبل', nameEN: 'Chicken marinated', descriptionAR: 'دجاج كامل متبل جاهز للطهي.', descriptionEN: 'Whole chicken marinated and ready for cooking.', price: 45, ingredients: 'دجاج، توابل.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'اسكالوب لحمة', nameEN: 'Meat Escalope', descriptionAR: 'شرائح لحم رقيقة جاهزة للقلي، مغطاة بالبقسماط.', descriptionEN: 'Thin meat slices ready for frying, coated with breadcrumbs.', price: 60, ingredients: 'لحم بقري، بقسماط.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'اسكالوب فراخ', nameEN: 'Chicken Escalope', descriptionAR: 'شرائح دجاج رقيقة جاهزة للقلي، مغطاة بالبقسماط.', descriptionEN: 'Thin chicken slices ready for frying, coated with breadcrumbs.', price: 45, ingredients: 'دجاج، بقسماط.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'كفتة لحمة بانيه', nameEN: 'Meat Kofta Pane', descriptionAR: 'كفتة لحم جاهزة للقلي، مغطاة بالبقسماط.', descriptionEN: 'Meat kofta ready for frying, coated with breadcrumbs.', price: 50, ingredients: 'كفتة لحم، بقسماط.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'كفتة فراخ بانيه', nameEN: 'Chicken Kofta Pane', descriptionAR: 'كفتة دجاج جاهزة للقلي، مغطاة بالبقسماط.', descriptionEN: 'Chicken kofta ready for frying, coated with breadcrumbs.', price: 50, ingredients: 'كفتة دجاج، بقسماط.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'كفتة رز', nameEN: 'Rice Kofta', descriptionAR: 'كفتة محضرة بالأرز، جاهزة للقلي.', descriptionEN: 'Rice kofta prepared and ready for frying.', price: 48, ingredients: 'كفتة، أرز.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'جوز حمام بالأرز', nameEN: 'Pigeon Stuffed Rice', descriptionAR: 'حمام محشو بالأرز جاهز للطهي.', descriptionEN: 'Pigeon stuffed with rice, ready for cooking.', price: 73, ingredients: 'حمام، أرز.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'جوز حمام بالفريك', nameEN: 'Pigeon Stuffed Freekeh', descriptionAR: 'حمام محشو بالفريك جاهز للطهي.', descriptionEN: 'Pigeon stuffed with freekeh, ready for cooking.', price: 75, ingredients: 'حمام، فريك.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'فرخة محشية رز', nameEN: 'Chicken Stuffed With Rice', descriptionAR: 'دجاجة كاملة محشوة بالأرز، جاهزة للطهي.', descriptionEN: 'Whole chicken stuffed with rice, ready for cooking.', price: 35, ingredients: 'دجاج، أرز.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'كبدة بالردة', nameEN: 'Breaded Liver', descriptionAR: 'كبدة جاهزة للقلي، مغطاة بالبقسماط.', descriptionEN: 'Liver ready for frying, coated with breadcrumbs.', price: 60, ingredients: 'كبدة، ردة، بقسماط.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'كبدة إسكندراني', nameEN: 'Alexandrian Liver', descriptionAR: 'كبدة جاهزة للطهي بالطريقة الإسكندرانية.', descriptionEN: 'Liver ready for cooking in Alexandrian style.', price: 60, ingredients: 'كبدة، توابل، فلفل.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'شاورما دجاج', nameEN: 'Chicken Shawarma', descriptionAR: 'شاورما دجاج جاهزة للتسخين والتقديم.', descriptionEN: 'Chicken shawarma ready for heating and serving.', price: 45, ingredients: 'دجاج، توابل شاورما.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'شاورما لحم', nameEN: 'Beef Shawarma', descriptionAR: 'شاورما لحم جاهزة للتسخين والتقديم.', descriptionEN: 'Beef shawarma ready for heating and serving.', price: 62, ingredients: 'لحم، توابل شاورما.' },
+      { category: 'Ready To Fry (جاهز للتحمير)', nameAR: 'ممبار', nameEN: 'Mumbar', descriptionAR: 'أمعاء محشوة جاهزة للطهي.', descriptionEN: 'Stuffed intestines ready for cooking.', price: 60, ingredients: 'أمعاء، أرز، خلطة.' },
+    ];
+
+    function generateMenu() {
+      const menuContainer = document.getElementById('menu-content');
+      menuContainer.innerHTML = ''; // Clear previous content
+
+      const groupedMenu = menuData.reduce((acc, item) => {
+        const category = item.category;
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+        acc[category].push(item);
+        return acc;
+      }, {});
+
+      for (const category in groupedMenu) {
+        if (groupedMenu.hasOwnProperty(category)) {
+          const [categoryAR, categoryEN] = category.split(' (');
+          const categoryTitle = `
+            <div class="mb-12">
+              <h3 class="text-3xl font-bold mb-6 text-right pb-2 border-b-2 border-red-600">${categoryAR} <span class="text-gray-500 text-xl">${categoryEN.slice(0, -1)}</span></h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          `;
+
+          let itemsHtml = '';
+          groupedMenu[category].forEach(item => {
+            itemsHtml += `
+              <div class="p-6 bg-white rounded-xl shadow-md border-r-4 border-red-600 card-hover transition-all duration-300 transform hover:scale-105">
+                <div class="flex justify-between items-center mb-2">
+                  <h4 class="font-bold text-lg text-gray-900">${item.nameAR}</h4>
+                  <p class="font-bold text-lg text-red-600">${item.price ? `${item.price} درهم` : ''}</p>
+                </div>
+                <p class="text-gray-500 text-sm mb-2">${item.nameEN}</p>
+                <p class="text-gray-600 text-sm leading-relaxed">${item.descriptionAR}</p>
+              </div>
+            `;
+          });
+
+          const categoryEnd = `</div></div>`;
+          menuContainer.innerHTML += categoryTitle + itemsHtml + categoryEnd;
+        }
+      }
+    }
+    
+    // Asynchronous function to fetch and display the Gemini API suggestion
+    async function getMealSuggestion(ingredients) {
+      const loadingDiv = document.getElementById('gemini-suggestion-loading');
+      const resultDiv = document.getElementById('gemini-suggestion-result');
+      
+      loadingDiv.classList.remove('hidden');
+      resultDiv.innerHTML = '';
+
+      const allItems = menuData.map(item => `${item.nameAR} (${item.descriptionAR})`).join(', ');
+      
+      const prompt = `Based on the following available ingredients: "${ingredients}", suggest ONE item from the following menu items that can be made. The suggestion should only be the name of the dish from the menu, nothing else. If none match, suggest the closest one. The menu items are: ${allItems}.`;
+
+      const chatHistory = [];
+      chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+      const payload = { contents: chatHistory };
+      const apiKey = ""
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (result.candidates && result.candidates.length > 0 &&
+            result.candidates[0].content && result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0) {
+          const suggestedDishName = result.candidates[0].content.parts[0].text;
+          const suggestedDish = menuData.find(item => item.nameAR === suggestedDishName.trim());
+          if (suggestedDish) {
+            resultDiv.innerHTML = `
+              <div class="p-6 bg-white rounded-xl shadow-md border-r-4 border-yellow-600">
+                <p class="font-bold text-lg text-yellow-600 mb-2">اقتراح من Gemini:</p>
+                <h4 class="font-bold text-xl text-gray-900">${suggestedDish.nameAR}</h4>
+                <p class="text-gray-600 text-sm">${suggestedDish.descriptionAR}</p>
+              </div>
+            `;
+          } else {
+            resultDiv.innerHTML = `<p class="text-gray-600">عذرًا، لم نتمكن من إيجاد اقتراح مناسب.</p>`;
+          }
+        } else {
+          resultDiv.innerHTML = `<p class="text-gray-600">عذرًا، حدث خطأ أثناء جلب الاقتراح.</p>`;
+        }
+      } catch (error) {
+        console.error('Error fetching data from Gemini API:', error);
+        resultDiv.innerHTML = `<p class="text-gray-600">عذرًا، حدث خطأ أثناء جلب الاقتراح.</p>`;
+      } finally {
+        loadingDiv.classList.add('hidden');
+      }
+    }
+
+    document.getElementById('suggest-meal-btn').addEventListener('click', () => {
+      const ingredients = document.getElementById('ingredients-input').value;
+      if (ingredients) {
+        getMealSuggestion(ingredients);
+      }
+    });
+
+    // Call the function to generate the menu when the page loads
+    window.addEventListener('DOMContentLoaded', generateMenu);
+  </script>
+</body>
+</html>
